@@ -40,4 +40,8 @@ public class PersonVehicleController {
     public String changeEligibleWeeklyBalance(@PathVariable("consumedUnit") String consumedUnit, @PathVariable("id") String id) {
         return personVehicleService.adjustWeeklyBalanceQuota(consumedUnit,id);
     }
+    
+    public void test(){
+
+    }
 }

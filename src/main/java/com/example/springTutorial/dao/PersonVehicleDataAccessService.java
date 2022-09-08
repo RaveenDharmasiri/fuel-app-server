@@ -22,7 +22,7 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     @Override
     public int insertPerson(PersonVehicles personVehicles) {
 
-        String sql = "INSERT INTO PERSONS_VEHICLE(ID, ID_TYPE, MOBILE_NUMBER, FIRST_NAME, LAST_NAME, ADDRESS, VEHICLE_TYPE, VEHICLE_NUMBER, CHASSIS_NUMBER, ELIGIBLE_WEEKLY_QUOTA, ELIGIBLE_WEEKLY_BALANCE, JOIN_DATE) " +
+        String sql = "INSERT INTO persons_vehicle(ID, ID_TYPE, MOBILE_NUMBER, FIRST_NAME, LAST_NAME, ADDRESS, VEHICLE_TYPE, VEHICLE_NUMBER, CHASSIS_NUMBER, ELIGIBLE_WEEKLY_QUOTA, ELIGIBLE_WEEKLY_BALANCE, JOIN_DATE) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,now())";
 
         return jdbcTemplate.update(sql,
@@ -56,7 +56,7 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
                     "CHASSIS_NUMBER, " +
                     "ELIGIBLE_WEEKLY_QUOTA, " +
                     "ELIGIBLE_WEEKLY_BALANCE, " +
-                    "JOIN_DATE FROM PERSONS_VEHICLE " +
+                    "JOIN_DATE FROM persons_vehicle " +
                 "WHERE MOBILE_NUMBER = ? " +
                 "AND REGISTRATION_FLAG = 'R'";
 
@@ -88,7 +88,7 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     @Override
     public int deletePersonById(String mobileNumber) {
 
-        String sql = "UPDATE PERSONS_VEHICLE " +
+        String sql = "UPDATE persons_vehicle " +
                 "SET REGISTRATION_FLAG = 'U' " +
                 "WHERE MOBILE_NUMBER = ?";
 
@@ -119,13 +119,13 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
 
     @Override
     public int adjustWeeklyBalanceQuota(int balanceUnit, String id) {
-        String sql = "UPDATE PERSONS_VEHICLE SET ELIGIBLE_WEEKLY_BALANCE = ? WHERE ID = ?";
+        String sql = "UPDATE persons_vehicle SET ELIGIBLE_WEEKLY_BALANCE = ? WHERE ID = ?";
         return jdbcTemplate.update(sql,balanceUnit, id);
     }
 
     @Override
     public int getWeeklyBalanceQuota(String id) {
-        String sql = "SELECT ELIGIBLE_WEEKLY_BALANCE FROM PERSONS_VEHICLE WHERE ID = ?";
+        String sql = "SELECT ELIGIBLE_WEEKLY_BALANCE FROM persons_vehicle WHERE ID = ?";
         //noinspection ConstantConditions
         return jdbcTemplate.queryForObject(sql, Integer.class,id);
     }

@@ -23,7 +23,7 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     public int insertPerson(PersonVehicles personVehicles) {
 
         String sql = "INSERT INTO PERSONS_VEHICLE(ID, ID_TYPE, MOBILE_NUMBER, FIRST_NAME, LAST_NAME, ADDRESS, VEHICLE_TYPE, VEHICLE_NUMBER, CHASSIS_NUMBER, ELIGIBLE_WEEKLY_QUOTA, ELIGIBLE_WEEKLY_BALANCE, JOIN_DATE) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,CURRENT_DATE)";
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,now())";
 
         return jdbcTemplate.update(sql,
                 personVehicles.getId(),

@@ -1,6 +1,8 @@
 package com.example.springTutorial.dao;
 
 import com.example.springTutorial.model.PersonVehicles;
+import com.example.springTutorial.model.QRCodeDetails;
+
 import java.util.Optional;
 
 public interface PersonsVehiclesDao {
@@ -10,7 +12,7 @@ public interface PersonsVehiclesDao {
 
     int deletePersonById(String mobileNumber);
 
-    Optional<PersonVehicles> getQRScannedWeeklyQuota(String mobileNumber);
+    Optional<QRCodeDetails> getQRScannedWeeklyQuota(String mobileNumber);
 
     int adjustWeeklyBalanceQuota(int balanceUnit, String id);
 

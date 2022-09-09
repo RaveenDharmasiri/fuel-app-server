@@ -1,6 +1,7 @@
 package com.example.springTutorial.dao;
 
 import com.example.springTutorial.model.PersonVehicles;
+import com.example.springTutorial.model.QRCodeDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -96,7 +97,7 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     }
 
     @Override
-    public Optional<PersonVehicles> getQRScannedWeeklyQuota(String mobileNumber) {
+    public Optional<QRCodeDetails> getQRScannedWeeklyQuota(String mobileNumber) {
 
         final String sql =
                 "SELECT " +
@@ -111,7 +112,7 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
                     String id = rs.getString("ID");
                     int eligible_weekly_quota = rs.getInt("ELIGIBLE_WEEKLY_QUOTA");
                     int eligible_weekly_balance = rs.getInt("ELIGIBLE_WEEKLY_BALANCE");
-                    return new PersonVehicles(id,eligible_weekly_quota,eligible_weekly_balance);
+                    return new QRCodeDetails(id,eligible_weekly_quota,eligible_weekly_balance);
                 },
                 mobileNumber
         ));

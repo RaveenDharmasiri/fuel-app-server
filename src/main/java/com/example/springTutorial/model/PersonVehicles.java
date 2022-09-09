@@ -49,7 +49,9 @@ public class PersonVehicles {
         this.joinDate = joinDate;
     }
 
-    public PersonVehicles(String id, int eligibleWeekQuota, int eligibleWeekBalance) {
+    public PersonVehicles(@JsonProperty(value = "id") String id,
+                          @JsonProperty(value = "eligibleWeekQuota") int eligibleWeekQuota,
+                          @JsonProperty(value = "eligibleWeekBalance") int eligibleWeekBalance) {
         this.id = id;
         this.eligibleWeekQuota = eligibleWeekQuota;
         this.eligibleWeekBalance = eligibleWeekBalance;

@@ -2,6 +2,7 @@ package com.example.springTutorial.service;
 
 import com.example.springTutorial.dao.PersonsVehiclesDao;
 import com.example.springTutorial.model.PersonVehicles;
+import com.example.springTutorial.model.QRCodeDetails;
 import com.example.springTutorial.qrCodeGenerator.QRController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +36,7 @@ public class PersonVehicleService {
         return personsVehiclesDao.deletePersonById(mobileNumber);
     }
 
-    public Optional<PersonVehicles> getQRCodeDetails(String mobileNumber) {
+    public Optional<QRCodeDetails> getQRCodeDetails(String mobileNumber) {
         return personsVehiclesDao.getQRScannedWeeklyQuota(mobileNumber);
     }
 

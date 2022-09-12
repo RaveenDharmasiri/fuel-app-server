@@ -16,7 +16,6 @@ public class PersonsVehiclesDaoImpl implements PersonsVehiclesDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-
     @Autowired
     public PersonsVehiclesDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

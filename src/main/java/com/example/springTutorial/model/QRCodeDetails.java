@@ -1,7 +1,5 @@
 package com.example.springTutorial.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class QRCodeDetails {
     private String id;
     private int eligibleWeekQuota;
@@ -18,11 +16,9 @@ public class QRCodeDetails {
     public String getId() {
         return this.id;
     }
-
     public int getEligibleWeekQuota() {
         return this.eligibleWeekQuota;
     }
-
     public int getEligibleWeekBalance() {
         return this.eligibleWeekBalance;
     }

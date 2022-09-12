@@ -1,5 +1,6 @@
-package com.example.springTutorial.dao;
+package com.example.springTutorial.daoimpl;
 
+import com.example.springTutorial.dao.PersonsVehiclesDao;
 import com.example.springTutorial.model.PersonVehicles;
 import com.example.springTutorial.model.QRCodeDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,13 @@ import java.util.Date;
 import java.util.Optional;
 
 @Repository("mysql")
-public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
+public class PersonsVehiclesDaoImpl implements PersonsVehiclesDao {
 
     private final JdbcTemplate jdbcTemplate;
 
+
     @Autowired
-    public PersonVehicleDataAccessService(JdbcTemplate jdbcTemplate) {
+    public PersonsVehiclesDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -43,23 +45,21 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     @Override
     public Optional<PersonVehicles> selectPersonByMobileNumber(String mobileNumber) {
 
-        System.out.println(mobileNumber);
-
         final String sql =
                 "SELECT ID, " +
-                    "ID_TYPE," +
-                    "MOBILE_NUMBER, " +
-                    "FIRST_NAME, " +
-                    "LAST_NAME, " +
-                    "ADDRESS, " +
-                    "VEHICLE_TYPE, " +
-                    "VEHICLE_NUMBER, " +
-                    "CHASSIS_NUMBER, " +
-                    "ELIGIBLE_WEEKLY_QUOTA, " +
-                    "ELIGIBLE_WEEKLY_BALANCE, " +
-                    "JOIN_DATE FROM persons_vehicle " +
-                "WHERE MOBILE_NUMBER = ? " +
-                "AND REGISTRATION_FLAG = 'R'";
+                        "ID_TYPE," +
+                        "MOBILE_NUMBER, " +
+                        "FIRST_NAME, " +
+                        "LAST_NAME, " +
+                        "ADDRESS, " +
+                        "VEHICLE_TYPE, " +
+                        "VEHICLE_NUMBER, " +
+                        "CHASSIS_NUMBER, " +
+                        "ELIGIBLE_WEEKLY_QUOTA, " +
+                        "ELIGIBLE_WEEKLY_BALANCE, " +
+                        "JOIN_DATE FROM persons_vehicle " +
+                        "WHERE MOBILE_NUMBER = ? " +
+                        "AND REGISTRATION_FLAG = 'R'";
 
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(
@@ -101,11 +101,11 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
 
         final String sql =
                 "SELECT " +
-                    "ID," +
-                    "ELIGIBLE_WEEKLY_QUOTA," +
-                    "ELIGIBLE_WEEKLY_BALANCE " +
-                "FROM persons_vehicle " +
-                "WHERE MOBILE_NUMBER = ?";
+                        "ID," +
+                        "ELIGIBLE_WEEKLY_QUOTA," +
+                        "ELIGIBLE_WEEKLY_BALANCE " +
+                        "FROM persons_vehicle " +
+                        "WHERE MOBILE_NUMBER = ?";
 
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql,
                 (rs, rowNum) -> {
@@ -130,4 +130,5 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
         //noinspection ConstantConditions
         return jdbcTemplate.queryForObject(sql, Integer.class,id);
     }
+
 }

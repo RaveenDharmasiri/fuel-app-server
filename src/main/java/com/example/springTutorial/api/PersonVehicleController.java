@@ -1,6 +1,7 @@
 package com.example.springTutorial.api;
 
 import com.example.springTutorial.model.PersonVehicles;
+import com.example.springTutorial.model.QRCodeDetails;
 import com.example.springTutorial.service.PersonVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -32,7 +33,7 @@ public class PersonVehicleController {
     }
 
     @GetMapping(path = "/get-QR-Code-details/{mNumber}")
-    public PersonVehicles getQRCodeDetail(@PathVariable("mNumber") String mobileNumber) {
+    public QRCodeDetails getQRCodeDetail(@PathVariable("mNumber") String mobileNumber) {
         return personVehicleService.getQRCodeDetails(mobileNumber).orElse(null);
     }
 

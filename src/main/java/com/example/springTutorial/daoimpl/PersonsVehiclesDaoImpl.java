@@ -1,6 +1,8 @@
-package com.example.springTutorial.dao;
+package com.example.springTutorial.daoimpl;
 
+import com.example.springTutorial.dao.PersonsVehiclesDao;
 import com.example.springTutorial.model.PersonVehicles;
+import com.example.springTutorial.model.QRCodeDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,19 +12,19 @@ import java.util.Date;
 import java.util.Optional;
 
 @Repository("mysql")
-public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
+public class PersonsVehiclesDaoImpl implements PersonsVehiclesDao {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonVehicleDataAccessService(JdbcTemplate jdbcTemplate) {
+    public PersonsVehiclesDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public int insertPerson(PersonVehicles personVehicles) {
 
-        String sql = "INSERT INTO PERSONS_VEHICLE(ID, ID_TYPE, MOBILE_NUMBER, FIRST_NAME, LAST_NAME, ADDRESS, VEHICLE_TYPE, VEHICLE_NUMBER, CHASSIS_NUMBER, ELIGIBLE_WEEKLY_QUOTA, ELIGIBLE_WEEKLY_BALANCE, JOIN_DATE) " +
+        String sql = "INSERT INTO persons_vehicle(ID, ID_TYPE, MOBILE_NUMBER, FIRST_NAME, LAST_NAME, ADDRESS, VEHICLE_TYPE, VEHICLE_NUMBER, CHASSIS_NUMBER, ELIGIBLE_WEEKLY_QUOTA, ELIGIBLE_WEEKLY_BALANCE, JOIN_DATE) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,now())";
 
         return jdbcTemplate.update(sql,
@@ -42,23 +44,21 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     @Override
     public Optional<PersonVehicles> selectPersonByMobileNumber(String mobileNumber) {
 
-        System.out.println(mobileNumber);
-
         final String sql =
                 "SELECT ID, " +
-                    "ID_TYPE," +
-                    "MOBILE_NUMBER, " +
-                    "FIRST_NAME, " +
-                    "LAST_NAME, " +
-                    "ADDRESS, " +
-                    "VEHICLE_TYPE, " +
-                    "VEHICLE_NUMBER, " +
-                    "CHASSIS_NUMBER, " +
-                    "ELIGIBLE_WEEKLY_QUOTA, " +
-                    "ELIGIBLE_WEEKLY_BALANCE, " +
-                    "JOIN_DATE FROM PERSONS_VEHICLE " +
-                "WHERE MOBILE_NUMBER = ? " +
-                "AND REGISTRATION_FLAG = 'R'";
+                        "ID_TYPE," +
+                        "MOBILE_NUMBER, " +
+                        "FIRST_NAME, " +
+                        "LAST_NAME, " +
+                        "ADDRESS, " +
+                        "VEHICLE_TYPE, " +
+                        "VEHICLE_NUMBER, " +
+                        "CHASSIS_NUMBER, " +
+                        "ELIGIBLE_WEEKLY_QUOTA, " +
+                        "ELIGIBLE_WEEKLY_BALANCE, " +
+                        "JOIN_DATE FROM persons_vehicle " +
+                        "WHERE MOBILE_NUMBER = ? " +
+                        "AND REGISTRATION_FLAG = 'R'";
 
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(
@@ -88,7 +88,7 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     @Override
     public int deletePersonById(String mobileNumber) {
 
-        String sql = "UPDATE PERSONS_VEHICLE " +
+        String sql = "UPDATE persons_vehicle " +
                 "SET REGISTRATION_FLAG = 'U' " +
                 "WHERE MOBILE_NUMBER = ?";
 
@@ -96,22 +96,22 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
     }
 
     @Override
-    public Optional<PersonVehicles> getQRScannedWeeklyQuota(String mobileNumber) {
+    public Optional<QRCodeDetails> getQRScannedWeeklyQuota(String mobileNumber) {
 
         final String sql =
                 "SELECT " +
-                    "ID," +
-                    "ELIGIBLE_WEEKLY_QUOTA," +
-                    "ELIGIBLE_WEEKLY_BALANCE " +
-                "FROM persons_vehicle " +
-                "WHERE MOBILE_NUMBER = ?";
+                        "ID," +
+                        "ELIGIBLE_WEEKLY_QUOTA," +
+                        "ELIGIBLE_WEEKLY_BALANCE " +
+                        "FROM persons_vehicle " +
+                        "WHERE MOBILE_NUMBER = ?";
 
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql,
                 (rs, rowNum) -> {
                     String id = rs.getString("ID");
                     int eligible_weekly_quota = rs.getInt("ELIGIBLE_WEEKLY_QUOTA");
                     int eligible_weekly_balance = rs.getInt("ELIGIBLE_WEEKLY_BALANCE");
-                    return new PersonVehicles(id,eligible_weekly_quota,eligible_weekly_balance);
+                    return new QRCodeDetails(id,eligible_weekly_quota,eligible_weekly_balance);
                 },
                 mobileNumber
         ));
@@ -119,14 +119,15 @@ public class PersonVehicleDataAccessService implements PersonsVehiclesDao {
 
     @Override
     public int adjustWeeklyBalanceQuota(int balanceUnit, String id) {
-        String sql = "UPDATE PERSONS_VEHICLE SET ELIGIBLE_WEEKLY_BALANCE = ? WHERE ID = ?";
+        String sql = "UPDATE persons_vehicle SET ELIGIBLE_WEEKLY_BALANCE = ? WHERE ID = ?";
         return jdbcTemplate.update(sql,balanceUnit, id);
     }
 
     @Override
     public int getWeeklyBalanceQuota(String id) {
-        String sql = "SELECT ELIGIBLE_WEEKLY_BALANCE FROM PERSONS_VEHICLE WHERE ID = ?";
+        String sql = "SELECT ELIGIBLE_WEEKLY_BALANCE FROM persons_vehicle WHERE ID = ?";
         //noinspection ConstantConditions
         return jdbcTemplate.queryForObject(sql, Integer.class,id);
     }
+
 }

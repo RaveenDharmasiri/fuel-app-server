@@ -2,7 +2,6 @@ package com.example.springTutorial.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.security.SecureRandom;
 import java.util.Date;
 
 public class PersonVehicles {
@@ -12,16 +11,12 @@ public class PersonVehicles {
     private String firstName;
     private String lastName;
     private String address;
-
     private String vehicleType;
     private String vehicleNumber;
     private String chassisNumber;
-
     private int eligibleWeekQuota;
     private int eligibleWeekBalance;
     private Date joinDate;
-
-
 
     public PersonVehicles(@JsonProperty(value = "id") String id,
                           @JsonProperty(value = "idType") String idType,
@@ -49,56 +44,39 @@ public class PersonVehicles {
         this.joinDate = joinDate;
     }
 
-    public PersonVehicles(String id, int eligibleWeekQuota, int eligibleWeekBalance) {
-        this.id = id;
-        this.eligibleWeekQuota = eligibleWeekQuota;
-        this.eligibleWeekBalance = eligibleWeekBalance;
-    }
-
     public String getId() {
         return id;
     }
-
     public String getIdType() {
         return idType;
     }
-
     public int getMobileNumber() {
         return mobileNumber;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getAddress() {
         return address;
     }
-
     public String getVehicleType() {
         return vehicleType;
     }
-
     public String getVehicleNumber() {
         return vehicleNumber;
     }
-
     public String getChassisNumber() {
         return chassisNumber;
     }
-
     public int getEligibleWeekQuota() {
         return eligibleWeekQuota;
     }
-
     public int getEligibleWeekBalance() {
         return eligibleWeekBalance;
     }
-
     public Date getJoinDate() {
         return joinDate;
     }
